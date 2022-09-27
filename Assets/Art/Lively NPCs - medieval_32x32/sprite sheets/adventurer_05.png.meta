@@ -114,7 +114,7 @@ TextureImporter:
         width: 24
         height: 27
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -130,12 +130,12 @@ TextureImporter:
       name: adventurer_05_1
       rect:
         serializedVersion: 2
-        x: 37
+        x: 35
         y: 0
-        width: 22
+        width: 24
         height: 27
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -151,12 +151,12 @@ TextureImporter:
       name: adventurer_05_2
       rect:
         serializedVersion: 2
-        x: 70
+        x: 67
         y: 0
-        width: 21
-        height: 26
+        width: 24
+        height: 27
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -172,12 +172,12 @@ TextureImporter:
       name: adventurer_05_3
       rect:
         serializedVersion: 2
-        x: 101
+        x: 99
         y: 0
-        width: 22
+        width: 24
         height: 27
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

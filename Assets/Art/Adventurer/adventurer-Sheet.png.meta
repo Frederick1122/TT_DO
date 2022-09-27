@@ -68,10 +68,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
+    maxTextureSize: 4096
+    resizeAlgorithm: 1
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -1665,9 +1665,9 @@ TextureImporter:
       adventurer-Sheet_52: -1369083801
       adventurer-Sheet_22: -418799759
       adventurer-Sheet_23: 1748314687
-      adventurer-Sheet_50: 1513309862
       adventurer-Sheet_53: -1000865671
       adventurer-Sheet_64: 1634983457
+      adventurer-Sheet_50: 1513309862
       adventurer-Sheet_1: 328555113
       adventurer-Sheet_4: -1439725259
       adventurer-Sheet_51: 1741439981
