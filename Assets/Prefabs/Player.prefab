@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5594246642614481583}
   - component: {fileID: 5594246642614481582}
-  - component: {fileID: 7969105588627255128}
+  - component: {fileID: 296501051}
   - component: {fileID: 2876815639629825122}
   - component: {fileID: 5594246642614481581}
   - component: {fileID: 1208131818}
@@ -89,7 +89,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7969105588627255128
+--- !u!114 &296501051
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,14 +98,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 5594246642614481580}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18b84d2979d27634ab0fc8194df68f74, type: 3}
+  m_Script: {fileID: 11500000, guid: df08a3f906454f147a8a10e58486875a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 0
-  _jumpSpeed: 0
+  _minGroundNormalY: 0.65
+  _gravityModifier: 1
+  _rigidbody2D: {fileID: 6714870529773086778}
+  _maxSpeed: 7
+  _jumpTakeOffSpeed: 7
+  _jumpState: 0
+  _boxCollider2D: {fileID: 1208131818}
+  _spriteRenderer: {fileID: 5594246642614481582}
+  _animator: {fileID: 5594246642614481581}
   _playerInputSystem: {fileID: 2876815639629825122}
-  _boxCollider2D: {fileID: 0}
-  _rigidbody2D: {fileID: 0}
+  _controlEnabled: 1
 --- !u!114 &2876815639629825122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,16 +179,16 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5594246642614481580}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0.1
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
