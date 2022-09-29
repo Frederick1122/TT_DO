@@ -8,7 +8,7 @@ public class PlayerInputSystem : MonoBehaviour
 
     private void Start() => UpdateCurrentInputSystem();
 
-    public Vector3 UpdateMovement() => _currentInputSystem.UpdateMovement();
+    public Vector2 UpdateMovement() => _currentInputSystem.UpdateMovement();
 
     public void SetControllerType(ControllerType newControllerType)
     {
