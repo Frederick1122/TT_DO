@@ -2,5 +2,6 @@ using UnityEngine;
 
 public interface IInputSystem
 {
-    public Vector2 UpdateMovement();
+    public float MovingHorizontal();
+    public bool IsPressJump();
 }

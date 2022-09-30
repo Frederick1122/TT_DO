@@ -2,11 +2,7 @@ using UnityEngine;
 
 public class PCInputSystem : IInputSystem
 {
-    public Vector2 UpdateMovement()
-    {
-        var moveHorizontal = Input.GetAxis("Horizontal");
-        var moveVertical = Input.GetAxis("Vertical");
+    public float MovingHorizontal() => Input.GetAxis("Horizontal");
 
-        return new Vector2(moveHorizontal, moveVertical);
-    }
+    public bool IsPressJump() => Input.GetButtonUp("Jump");
 }

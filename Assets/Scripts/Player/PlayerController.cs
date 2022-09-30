@@ -1,29 +1,28 @@
 ﻿using UnityEngine;
 
-
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(PlayerInputSystem))]
-public class PlayerController : KinematicObject
+[RequireComponent(typeof(PlayerInputSystem))] 
+[RequireComponent(typeof(Rigidbody2D))]
+public class PlayerController : BaseMonoBehaviour
 {
     [Header("PlayerController settings")]
     [SerializeField] private float _maxSpeed = 7;
     [SerializeField] private float _jumpTakeOffSpeed = 7;
-    [SerializeField] private JumpState _jumpState = JumpState.Grounded;
 
     [Header("Autofill fields")]
     [SerializeField] private BoxCollider2D _boxCollider2D;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Animator _animator;
     [SerializeField] private PlayerInputSystem _playerInputSystem;
+    [SerializeField] private Rigidbody2D _rigidbody2D;
+    [SerializeField] private GroundChecker _groundChecker;
 
     public bool _controlEnabled = true;
-    private bool _stopJump;
-    private bool _jump;
-    private Vector2 _move;
+    private Vector2 _movement;
 
-    public Bounds Bounds => _boxCollider2D.bounds;
+    private bool _isGrounded;
 
     protected override void OnEditorValidate()
     {
@@ -37,81 +36,54 @@ public class PlayerController : KinematicObject
 
         if (_animator.IsNullOrDefault())
             _animator = GetComponent<Animator>();
+
+        if (_rigidbody2D.IsNullOrDefault())
+            _rigidbody2D = GetComponent<Rigidbody2D>();
+
+        if (_playerInputSystem.IsNullOrDefault())
+            _playerInputSystem = GetComponent<PlayerInputSystem>();
+        
+        if (_groundChecker.IsNullOrDefault())
+            _groundChecker = GetComponentInChildren<GroundChecker>();
     }
 
-    protected override void Update()
+    private void Start() => _groundChecker.CheckingPossibilityOfJumpAction += UpdatePossibilityOfJump;
+
+    protected void Update()
     {
         if (_controlEnabled)
         {
-            _move.x = Input.GetAxis("Horizontal");
-            
-            if (_jumpState == JumpState.Grounded && Input.GetButtonDown("Jump"))
-                _jumpState = JumpState.PrepareToJump;
-            else if (Input.GetButtonUp("Jump")) 
-                _stopJump = true;
+            _movement.x = Mathf.Clamp(_movement.x + _playerInputSystem.MovingHorizontal(), -_maxSpeed, _maxSpeed);
+
+            if (_movement.x > _rigidbody2D.angularDrag)
+                _movement.x -= _rigidbody2D.angularDrag;
+            else if (_movement.x < -_rigidbody2D.angularDrag)
+                _movement.x += _rigidbody2D.angularDrag;
+            else
+                _movement.x = 0;
         }
         else
-            _move.x = 0;
+            _movement.x = 0;
+        
+        ComputeVelocity();
+    }
+    
 
-        UpdateJumpState();
-        base.Update();
+    private void ComputeVelocity()
+    {
+        if (_isGrounded && _playerInputSystem.IsPressJump())
+            _rigidbody2D.velocity = Vector2.up * _jumpTakeOffSpeed;
+
+        if (_movement.x > 0.01f)
+            transform.rotation = Quaternion.Euler(0,0,0);
+        else if (_movement.x < -0.01f)
+            transform.rotation = Quaternion.Euler(0,180,0);
+
+        _rigidbody2D.velocity = new Vector2(_movement.x, _rigidbody2D.velocity.y);
     }
 
-    void UpdateJumpState()
+    private void UpdatePossibilityOfJump()
     {
-        _jump = false;
-        switch (_jumpState)
-        {
-            case JumpState.PrepareToJump:
-                _jumpState = JumpState.Jumping;
-                _jump = true;
-                _stopJump = false;
-                break;
-            case JumpState.Jumping:
-                if (!IsGrounded)
-                    _jumpState = JumpState.InFlight;
-                break;
-            case JumpState.InFlight:
-                if (IsGrounded)
-                    _jumpState = JumpState.Landed;
-                break;
-            case JumpState.Landed:
-                _jumpState = JumpState.Grounded;
-                break;
-        }
-    }
-
-    protected override void ComputeVelocity()
-    {
-        if (_jump && IsGrounded)
-        {
-            _velocity.y = _jumpTakeOffSpeed * 1.5f;
-            _jump = false;
-        }
-        else if (_stopJump)
-        {
-            _stopJump = false;
-            if (_velocity.y > 0) 
-                _velocity.y *= 0.5f;
-        }
-
-        if (_move.x > 0.01f)
-            _spriteRenderer.flipX = false;
-        else if (_move.x < -0.01f)
-            _spriteRenderer.flipX = true;
-
-        //_animator.SetBool("grounded", IsGrounded);
-        //_animator.SetFloat("velocityX", Mathf.Abs(_velocity.x) / _maxSpeed);
-
-        _targetVelocity = _move * _maxSpeed;
-    }
-
-    public enum JumpState
-    {
-        Grounded,
-        PrepareToJump,
-        Jumping,
-        InFlight,
-        Landed
+        _isGrounded = true;
     }
 }
