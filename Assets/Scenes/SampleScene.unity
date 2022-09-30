@@ -552,7 +552,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 2.0030865e-18, y: -0.00024681087, z: 4.9438355e-22, w: 1}
-  m_LocalPosition: {x: 22.687202, y: 4.690895, z: -930.5}
+  m_LocalPosition: {x: 22.704937, y: 5.0749187, z: -930.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1896,18 +1896,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 296501051, guid: d3d42d38ca6f68041bf19b8b7f97d973, type: 3}
-      propertyPath: _maxSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 296501051, guid: d3d42d38ca6f68041bf19b8b7f97d973, type: 3}
-      propertyPath: _gravityModifier
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 296501051, guid: d3d42d38ca6f68041bf19b8b7f97d973, type: 3}
-      propertyPath: _jumpTakeOffSpeed
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 5594246642614481580, guid: d3d42d38ca6f68041bf19b8b7f97d973, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1934,15 +1922,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5594246642614481583, guid: d3d42d38ca6f68041bf19b8b7f97d973, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -2.003086e-18
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5594246642614481583, guid: d3d42d38ca6f68041bf19b8b7f97d973, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00024681087
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5594246642614481583, guid: d3d42d38ca6f68041bf19b8b7f97d973, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -4.9438345e-22
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5594246642614481583, guid: d3d42d38ca6f68041bf19b8b7f97d973, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
