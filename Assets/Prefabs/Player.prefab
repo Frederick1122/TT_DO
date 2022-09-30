@@ -98,7 +98,7 @@ Transform:
   - {fileID: 6385702858032988200}
   - {fileID: 513865006209912332}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5594246642614481582
 SpriteRenderer:
@@ -166,13 +166,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxSpeed: 7
   _jumpTakeOffSpeed: 7
-  _jumpState: 0
   _boxCollider2D: {fileID: 1208131818}
   _spriteRenderer: {fileID: 5594246642614481582}
   _animator: {fileID: 5594246642614481581}
   _playerInputSystem: {fileID: 2876815639629825122}
   _rigidbody2D: {fileID: 6714870529773086778}
   _groundChecker: {fileID: 8799838020259030210}
+  _attackZone: {fileID: 716081750}
   _controlEnabled: 1
 --- !u!114 &2876815639629825122
 MonoBehaviour:
@@ -264,6 +264,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6385702858032988200}
   - component: {fileID: 6098547293075110898}
+  - component: {fileID: 716081750}
   m_Layer: 0
   m_Name: AttackZone
   m_TagString: Untagged
@@ -312,3 +313,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.0094512, y: 2.5518408}
   m_EdgeRadius: 0
+--- !u!114 &716081750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5607261963262944198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b47e4f54b625164d985f7022db6403d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
