@@ -8,10 +8,7 @@ public class PlayerInputSystem : MonoBehaviour
 
     private void Start() => UpdateCurrentInputSystem();
 
-    public float MovingHorizontal() => _currentInputSystem.MovingHorizontal();
-
-    public bool IsPressJump() => _currentInputSystem.IsPressJump();
-
+    public IInputSystem GetPIS() => _currentInputSystem;
     public void SetControllerType(ControllerType newControllerType)
     {
         _controllerType = newControllerType;

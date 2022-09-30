@@ -21,4 +21,10 @@ public abstract class BaseMonoBehaviour : MonoBehaviour
         OnEditorValidate();
     }
 #endif
+    
+    protected void FillInField<T>(ref T component)
+    {
+        if (component.IsNullOrDefault())
+            component = GetComponent<T>();
+    }
 }

@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Linq;
+using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
-[RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(PlayerInputSystem))] 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -13,11 +14,11 @@ public class PlayerController : BaseMonoBehaviour
 
     [Header("Autofill fields")]
     [SerializeField] private BoxCollider2D _boxCollider2D;
-    [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Animator _animator;
     [SerializeField] private PlayerInputSystem _playerInputSystem;
     [SerializeField] private Rigidbody2D _rigidbody2D;
     [SerializeField] private GroundChecker _groundChecker;
+    [SerializeField] private AttackZone _attackZone;
 
     public bool _controlEnabled = true;
     private Vector2 _movement;
@@ -28,23 +29,16 @@ public class PlayerController : BaseMonoBehaviour
     {
         base.OnEditorValidate();
 
-        if (_boxCollider2D.IsNullOrDefault())
-            _boxCollider2D = GetComponent<BoxCollider2D>();
+        FillInField(ref _boxCollider2D);
+        FillInField(ref _animator);
+        FillInField(ref _rigidbody2D);
+        FillInField(ref _playerInputSystem);
 
-        if (_spriteRenderer.IsNullOrDefault())
-            _spriteRenderer = GetComponent<SpriteRenderer>();
-
-        if (_animator.IsNullOrDefault())
-            _animator = GetComponent<Animator>();
-
-        if (_rigidbody2D.IsNullOrDefault())
-            _rigidbody2D = GetComponent<Rigidbody2D>();
-
-        if (_playerInputSystem.IsNullOrDefault())
-            _playerInputSystem = GetComponent<PlayerInputSystem>();
-        
         if (_groundChecker.IsNullOrDefault())
             _groundChecker = GetComponentInChildren<GroundChecker>();
+        
+        if (_attackZone.IsNullOrDefault())
+            _attackZone = GetComponentInChildren<AttackZone>();
     }
 
     private void Start() => _groundChecker.CheckingPossibilityOfJumpAction += UpdatePossibilityOfJump;
@@ -53,7 +47,8 @@ public class PlayerController : BaseMonoBehaviour
     {
         if (_controlEnabled)
         {
-            _movement.x = Mathf.Clamp(_movement.x + _playerInputSystem.MovingHorizontal(), -_maxSpeed, _maxSpeed);
+            CheckCombatSkills();
+            _movement.x = Mathf.Clamp(_movement.x + _playerInputSystem.GetPIS().MovingHorizontal(), -_maxSpeed, _maxSpeed);
 
             if (_movement.x > _rigidbody2D.angularDrag)
                 _movement.x -= _rigidbody2D.angularDrag;
@@ -71,8 +66,11 @@ public class PlayerController : BaseMonoBehaviour
 
     private void ComputeVelocity()
     {
-        if (_isGrounded && _playerInputSystem.IsPressJump())
+        if (_isGrounded && _playerInputSystem.GetPIS().IsPressJump())
+        {
             _rigidbody2D.velocity = Vector2.up * _jumpTakeOffSpeed;
+            _isGrounded = false;
+        }
 
         if (_movement.x > 0.01f)
             transform.rotation = Quaternion.Euler(0,0,0);
@@ -85,5 +83,25 @@ public class PlayerController : BaseMonoBehaviour
     private void UpdatePossibilityOfJump()
     {
         _isGrounded = true;
+    }
+
+    public void CheckCombatSkills()
+    {
+        if (_playerInputSystem.GetPIS().IsPressPunch()) 
+            StartCoroutine(Punch());
+    }
+
+    IEnumerator Punch()
+    {
+        _controlEnabled = false;
+
+        yield return new WaitForSeconds(0.5f);
+
+        var enemies = _attackZone.GetEnemies();
+
+        for (var index = 0; index < enemies.Count; index++)
+            enemies[index].Death();
+
+        _controlEnabled = true;
     }
 }

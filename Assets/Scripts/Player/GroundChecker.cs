@@ -6,5 +6,11 @@ public class GroundChecker : BaseMonoBehaviour
 {
     public Action CheckingPossibilityOfJumpAction;
 
-    private void OnCollisionEnter2D(Collision2D other) => CheckingPossibilityOfJumpAction?.Invoke();
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if(!other.gameObject.GetComponent<Ground>())
+            return;
+        
+        CheckingPossibilityOfJumpAction?.Invoke();
+    }
 }
