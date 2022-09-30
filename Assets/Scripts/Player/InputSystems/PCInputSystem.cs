@@ -4,7 +4,7 @@ public class PCInputSystem : IInputSystem
 {
     public float MovingHorizontal() => Input.GetAxis("Horizontal");
 
-    public bool IsPressJump() => Input.GetButtonUp("Jump");
+    public bool IsPressJump() => Input.GetButtonDown("Jump");
     
     public bool IsPressPunch() => Input.GetKeyDown(KeyCode.E);
 

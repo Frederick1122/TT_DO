@@ -98,10 +98,13 @@ public class PlayerController : BaseMonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         var enemies = _attackZone.GetEnemies();
+        var enemiesCount = enemies.Count;
 
         for (var index = 0; index < enemies.Count; index++)
             enemies[index].Death();
 
+        WinnerMenu.Instance.UpdateQuantityRemainingEnemies(-enemiesCount);
+        
         _controlEnabled = true;
     }
 }
