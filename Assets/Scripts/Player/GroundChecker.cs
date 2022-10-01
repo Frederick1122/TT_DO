@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CircleCollider2D))]
+[RequireComponent(typeof(CapsuleCollider2D))]
 public class GroundChecker : BaseMonoBehaviour
 {
     private List<Ground> _contacts = new List<Ground>();

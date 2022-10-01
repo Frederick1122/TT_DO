@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(PolygonCollider2D))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(PlayerInputSystem))] 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -18,7 +18,7 @@ public class PlayerController : BaseMonoBehaviour
     [SerializeField] private GameObject _spawnPoint;
     
     [Header("Autofill fields")]
-    [SerializeField] private BoxCollider2D _boxCollider2D;
+    [SerializeField] private PolygonCollider2D _polygonCollider2D;
     [SerializeField] private Animator _animator;
     [SerializeField] private PlayerInputSystem _playerInputSystem;
     [SerializeField] private Rigidbody2D _rigidbody2D;
@@ -40,7 +40,7 @@ public class PlayerController : BaseMonoBehaviour
     {
         base.OnEditorValidate();
 
-        FillInField(ref _boxCollider2D);
+        FillInField(ref _polygonCollider2D);
         FillInField(ref _animator);
         FillInField(ref _rigidbody2D);
         FillInField(ref _playerInputSystem);

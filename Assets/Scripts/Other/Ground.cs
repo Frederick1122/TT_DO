@@ -1,19 +1,19 @@
-using System;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
-[RequireComponent(typeof(BoxCollider2D))]
-[RequireComponent(typeof(PlatformEffector2D))]
+[RequireComponent(typeof(TilemapCollider2D))]
+[RequireComponent(typeof(CompositeCollider2D))]
 public class Ground : BaseMonoBehaviour
 {
     [Header("Autofill fields")]
-    [SerializeField] private BoxCollider2D _boxCollider2D;
+    [SerializeField] private TilemapCollider2D _tilemapCollider2D;
     
     protected override void OnEditorValidate()
     {
         base.OnEditorValidate();
         
-        FillInField(ref _boxCollider2D);
+        FillInField(ref _tilemapCollider2D);
     }
 
-    private void Start() => _boxCollider2D.usedByComposite = true;
+    private void Start() => _tilemapCollider2D.usedByComposite = true;
 }
