@@ -97,8 +97,9 @@ Transform:
   m_Children:
   - {fileID: 6385702858032988200}
   - {fileID: 513865006209912332}
+  - {fileID: 7880170789856518866}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5594246642614481582
 SpriteRenderer:
@@ -165,9 +166,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxSpeed: 7
-  _jumpTakeOffSpeed: 7
+  _jumpTakeOffSpeed: 10
+  _fireballPrefab: {fileID: 1188850429, guid: b6832a52be19aea428a39b356239ab96, type: 3}
+  _spawnPoint: {fileID: 9073207538193227384}
   _boxCollider2D: {fileID: 1208131818}
-  _spriteRenderer: {fileID: 5594246642614481582}
   _animator: {fileID: 5594246642614481581}
   _playerInputSystem: {fileID: 2876815639629825122}
   _rigidbody2D: {fileID: 6714870529773086778}
@@ -325,3 +327,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b47e4f54b625164d985f7022db6403d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &9073207538193227384
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7880170789856518866}
+  m_Layer: 0
+  m_Name: FireballSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7880170789856518866
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9073207538193227384}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.126, y: 0, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5594246642614481583}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
