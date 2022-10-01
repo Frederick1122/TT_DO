@@ -72,7 +72,6 @@ GameObject:
   - component: {fileID: 5594246642614481583}
   - component: {fileID: 5594246642614481582}
   - component: {fileID: 296501051}
-  - component: {fileID: 2876815639629825122}
   - component: {fileID: 5594246642614481581}
   - component: {fileID: 6714870529773086778}
   - component: {fileID: 7376196721108966266}
@@ -99,7 +98,7 @@ Transform:
   - {fileID: 513865006209912332}
   - {fileID: 7880170789856518866}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5594246642614481582
 SpriteRenderer:
@@ -141,7 +140,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: -407047106, guid: 1025f670cbd42fe459d1e61837ddd24d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -167,28 +166,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxSpeed: 7
   _jumpTakeOffSpeed: 10
+  _dragModifier: 3
   _fireballPrefab: {fileID: 1188850429, guid: b6832a52be19aea428a39b356239ab96, type: 3}
   _spawnPoint: {fileID: 9073207538193227384}
   _polygonCollider2D: {fileID: 7376196721108966266}
   _animator: {fileID: 5594246642614481581}
-  _playerInputSystem: {fileID: 2876815639629825122}
   _rigidbody2D: {fileID: 6714870529773086778}
   _groundChecker: {fileID: 8799838020259030210}
   _attackZone: {fileID: 716081750}
   _controlEnabled: 1
---- !u!114 &2876815639629825122
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5594246642614481580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 521ae48109b4ba74caed7bab564bd01f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _controllerType: 0
 --- !u!95 &5594246642614481581
 Animator:
   serializedVersion: 4
@@ -222,7 +208,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 0.1
   m_AngularDrag: 0.1
   m_GravityScale: 1
   m_Material: {fileID: 0}
