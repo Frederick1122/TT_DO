@@ -9,4 +9,6 @@ public class PCInputSystem : IInputSystem
     public bool IsPressPunch() => Input.GetKeyDown(KeyCode.E);
 
     public bool IsPressShot() => Input.GetKeyDown(KeyCode.Q);
+    
+    public bool IsLaunchEscMenu() => Input.GetKeyDown(KeyCode.Escape);
 }

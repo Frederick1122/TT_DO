@@ -3,18 +3,37 @@ using UnityEngine;
 
 public class PlayerInputSystem : MonoBehaviour
 {
+    #region Singleton
+    public static PlayerInputSystem Instance
+    {
+        get;
+        private set;
+    }
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(this);
+    }
+    #endregion
+    
     [SerializeField] private ControllerType _controllerType;
     private IInputSystem _currentInputSystem;
 
+    public Action LaunchEscMenuAction;
+    
     private void Start() => UpdateCurrentInputSystem();
 
     public IInputSystem GetPIS() => _currentInputSystem;
-    public void SetControllerType(ControllerType newControllerType)
+
+    private void Update()
     {
-        _controllerType = newControllerType;
-        UpdateCurrentInputSystem();
+        if(_currentInputSystem.IsLaunchEscMenu())
+            LaunchEscMenuAction?.Invoke();
     }
-    
+
     private void UpdateCurrentInputSystem()
     {
         _currentInputSystem = _controllerType switch

@@ -1,17 +1,16 @@
 ﻿using System.Collections;
-using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(PolygonCollider2D))]
 [RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(PlayerInputSystem))] 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : BaseMonoBehaviour
 {
     [Header("Movement settings")]
     [SerializeField] private float _maxSpeed = 7;
     [SerializeField] private float _jumpTakeOffSpeed = 7;
-
+    [SerializeField] private float _dragModifier = 3f;
+    
     [Header("Combat settings")] [SerializeField]
     private Fireball _fireballPrefab;
 
@@ -20,11 +19,11 @@ public class PlayerController : BaseMonoBehaviour
     [Header("Autofill fields")]
     [SerializeField] private PolygonCollider2D _polygonCollider2D;
     [SerializeField] private Animator _animator;
-    [SerializeField] private PlayerInputSystem _playerInputSystem;
     [SerializeField] private Rigidbody2D _rigidbody2D;
     [SerializeField] private GroundChecker _groundChecker;
     [SerializeField] private AttackZone _attackZone;
 
+    private PlayerInputSystem _playerInputSystem;
     public bool _controlEnabled = true;
     private Vector2 _movement;
 
@@ -43,7 +42,6 @@ public class PlayerController : BaseMonoBehaviour
         FillInField(ref _polygonCollider2D);
         FillInField(ref _animator);
         FillInField(ref _rigidbody2D);
-        FillInField(ref _playerInputSystem);
 
         if (_groundChecker.IsNullOrDefault())
             _groundChecker = GetComponentInChildren<GroundChecker>();
@@ -54,6 +52,7 @@ public class PlayerController : BaseMonoBehaviour
 
     private void Start()
     {
+        _playerInputSystem = PlayerInputSystem.Instance;
         _groundChecker.CheckingPossibilityOfJumpAction += UpdatePossibilityOfJump;
         _groundChecker.DropCheckAction += HandleFalls;
     }
@@ -62,23 +61,32 @@ public class PlayerController : BaseMonoBehaviour
     {
         if (_controlEnabled)
         {
-            if(_isGrounded)
-                CheckCombatSkills();
+            
             var movingHorizontal = _playerInputSystem.GetPIS().MovingHorizontal();
+            
             _movement.x = Mathf.Clamp(_movement.x + movingHorizontal, -_maxSpeed, _maxSpeed);
 
-            if (_movement.x > _rigidbody2D.angularDrag)
-                _movement.x -= _rigidbody2D.angularDrag;
-            else if (_movement.x < -_rigidbody2D.angularDrag)
-                _movement.x += _rigidbody2D.angularDrag;
-            else
-                _movement.x = 0;
+            var dragModifier = 1f;
+
+            if (movingHorizontal == 0) 
+                dragModifier = _dragModifier;
+
+            if (_isGrounded)
+            {
+                CheckCombatSkills();
+            
+                if (_movement.x > _rigidbody2D.drag)
+                    _movement.x = Mathf.Clamp(_movement.x - _rigidbody2D.drag * dragModifier, 0, _maxSpeed);
+                else if (_movement.x < -_rigidbody2D.drag)
+                    _movement.x = Mathf.Clamp(_movement.x + _rigidbody2D.drag * dragModifier, -_maxSpeed, 0);
+                else
+                    _movement.x = 0;
+            }
             
             _animator.SetBool(Running,movingHorizontal != 0);
         }
         else
             _movement.x = 0;
-        
         
         ComputeVelocity();
     }
@@ -128,7 +136,7 @@ public class PlayerController : BaseMonoBehaviour
         _controlEnabled = false;
         _animator.SetTrigger(animationId);
         
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.4f);
 
         switch (strikeType)
         {
@@ -140,7 +148,7 @@ public class PlayerController : BaseMonoBehaviour
                 break;
         }
       
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.4f);
 
         _controlEnabled = true;
     }

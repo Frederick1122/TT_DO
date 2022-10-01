@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class WinnerMenu : MonoBehaviour
+public class WinnerMenu : Menu
 {
     #region Singleton
     public static WinnerMenu Instance
@@ -23,27 +23,27 @@ public class WinnerMenu : MonoBehaviour
     #endregion
 
     [SerializeField] private TMP_Text _endedTimer;
-    [SerializeField] private Button _restartGame;
+    [SerializeField] private Button _restartGameButton;
     
     private int _remainingEnemies = 0;
     
     private DateTime _startTime;
+    
     private void Start()
     {
         SetActivePanel(false);
         _startTime = DateTime.Now;
         
-        _restartGame.onClick.RemoveAllListeners();
-        _restartGame.onClick.AddListener(RestartGame);
+        _restartGameButton.onClick.RemoveAllListeners();
+        _restartGameButton.onClick.AddListener(RestartGame);
     }
 
     private void OpenWinnerMenu()
     {
-        
         var difference = DateTime.Now - _startTime;
+        _endedTimer.text = $"{difference.Minutes} m {difference.Seconds} s";
         
         SetActivePanel(true);
-        _endedTimer.text = $"{difference.Minutes} m {difference.Seconds} s";
     }
 
     public void UpdateQuantityRemainingEnemies(int changes)
@@ -53,12 +53,7 @@ public class WinnerMenu : MonoBehaviour
         if(_remainingEnemies == 0)
             OpenWinnerMenu();
     }
-
-    private void SetActivePanel(bool isActive)
-    {
-        transform.GetChild(0).gameObject.SetActive(isActive);
-    }
-
+    
     private void RestartGame()
     {
         SceneManager.LoadScene(0);

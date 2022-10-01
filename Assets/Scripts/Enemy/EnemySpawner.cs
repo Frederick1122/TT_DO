@@ -23,8 +23,9 @@ public class EnemySpawner : MonoBehaviour
             var spawnPoint = _spawnPoints.GetRandom();
             var enemyPrefab = _enemyPrefabs.GetRandom();
 
-            Instantiate(enemyPrefab, spawnPoint.transform.position, quaternion.identity);
-
+            var newEnemy = Instantiate(enemyPrefab, spawnPoint.transform.position, quaternion.identity);
+            newEnemy.transform.parent = gameObject.transform;
+            
             _spawnPoints.Remove(spawnPoint);
             _enemyPrefabs.Remove(enemyPrefab);
         }
