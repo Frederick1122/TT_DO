@@ -8,10 +8,15 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : BaseMonoBehaviour
 {
-    [Header("PlayerController settings")]
+    [Header("Movement settings")]
     [SerializeField] private float _maxSpeed = 7;
     [SerializeField] private float _jumpTakeOffSpeed = 7;
 
+    [Header("Combat settings")] [SerializeField]
+    private Fireball _fireballPrefab;
+
+    [SerializeField] private GameObject _spawnPoint;
+    
     [Header("Autofill fields")]
     [SerializeField] private BoxCollider2D _boxCollider2D;
     [SerializeField] private Animator _animator;
@@ -24,6 +29,12 @@ public class PlayerController : BaseMonoBehaviour
     private Vector2 _movement;
 
     private bool _isGrounded;
+    private static readonly int Attacking1 = Animator.StringToHash("Attacking1");
+    private static readonly int Attacking2 = Animator.StringToHash("Attacking2");
+    private static readonly int Jumping = Animator.StringToHash("Jumping");
+    private static readonly int Running = Animator.StringToHash("Running");
+    private static readonly int Grounded = Animator.StringToHash("Grounded");
+    private static readonly int Falling = Animator.StringToHash("Falling");
 
     protected override void OnEditorValidate()
     {
@@ -41,14 +52,20 @@ public class PlayerController : BaseMonoBehaviour
             _attackZone = GetComponentInChildren<AttackZone>();
     }
 
-    private void Start() => _groundChecker.CheckingPossibilityOfJumpAction += UpdatePossibilityOfJump;
+    private void Start()
+    {
+        _groundChecker.CheckingPossibilityOfJumpAction += UpdatePossibilityOfJump;
+        _groundChecker.DropCheckAction += HandleFalls;
+    }
 
     protected void Update()
     {
         if (_controlEnabled)
         {
-            CheckCombatSkills();
-            _movement.x = Mathf.Clamp(_movement.x + _playerInputSystem.GetPIS().MovingHorizontal(), -_maxSpeed, _maxSpeed);
+            if(_isGrounded)
+                CheckCombatSkills();
+            var movingHorizontal = _playerInputSystem.GetPIS().MovingHorizontal();
+            _movement.x = Mathf.Clamp(_movement.x + movingHorizontal, -_maxSpeed, _maxSpeed);
 
             if (_movement.x > _rigidbody2D.angularDrag)
                 _movement.x -= _rigidbody2D.angularDrag;
@@ -56,9 +73,12 @@ public class PlayerController : BaseMonoBehaviour
                 _movement.x += _rigidbody2D.angularDrag;
             else
                 _movement.x = 0;
+            
+            _animator.SetBool(Running,movingHorizontal != 0);
         }
         else
             _movement.x = 0;
+        
         
         ComputeVelocity();
     }
@@ -70,6 +90,7 @@ public class PlayerController : BaseMonoBehaviour
         {
             _rigidbody2D.velocity = Vector2.up * _jumpTakeOffSpeed;
             _isGrounded = false;
+            _animator.SetTrigger(Jumping);
         }
 
         if (_movement.x > 0.01f)
@@ -83,20 +104,49 @@ public class PlayerController : BaseMonoBehaviour
     private void UpdatePossibilityOfJump()
     {
         _isGrounded = true;
+        _animator.SetBool(Grounded, true);
+        _animator.SetBool(Falling, false);
     }
 
-    public void CheckCombatSkills()
+    private void HandleFalls()
+    {
+        _isGrounded = false;
+        _animator.SetBool(Falling, true);
+        _animator.SetBool(Grounded, false);
+    }
+
+    private void CheckCombatSkills()
     {
         if (_playerInputSystem.GetPIS().IsPressPunch()) 
-            StartCoroutine(Punch());
+            StartCoroutine(AttackRoutine(Attacking1,StrikeType.Punch));
+        else if(_playerInputSystem.GetPIS().IsPressShot())
+            StartCoroutine(AttackRoutine(Attacking2,StrikeType.Shot));
     }
 
-    IEnumerator Punch()
+    private IEnumerator AttackRoutine(int animationId, StrikeType strikeType)
     {
         _controlEnabled = false;
+        _animator.SetTrigger(animationId);
+        
+        yield return new WaitForSeconds(0.25f);
 
-        yield return new WaitForSeconds(0.5f);
+        switch (strikeType)
+        {
+            case StrikeType.Punch:
+                PunchHandler();
+                break;
+            case StrikeType.Shot:
+                ShotHandler();
+                break;
+        }
+      
+        yield return new WaitForSeconds(0.25f);
 
+        _controlEnabled = true;
+    }
+
+    private void PunchHandler()
+    {
         var enemies = _attackZone.GetEnemies();
         var enemiesCount = enemies.Count;
 
@@ -104,7 +154,17 @@ public class PlayerController : BaseMonoBehaviour
             enemies[index].Death();
 
         WinnerMenu.Instance.UpdateQuantityRemainingEnemies(-enemiesCount);
-        
-        _controlEnabled = true;
+    }
+
+    private void ShotHandler()
+    {
+        var fireball = Instantiate(_fireballPrefab, _spawnPoint.transform, false);
+        fireball.transform.parent = null;
+    }
+
+    private enum StrikeType
+    {
+        Punch,
+        Shot
     }
 }

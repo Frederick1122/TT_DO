@@ -39,10 +39,11 @@ public class WinnerMenu : MonoBehaviour
 
     private void OpenWinnerMenu()
     {
-        var difference = (DateTime.Now - _startTime).Seconds;
+        
+        var difference = DateTime.Now - _startTime;
         
         SetActivePanel(true);
-        _endedTimer.text = $"{difference / 60} m {difference % 60} s";
+        _endedTimer.text = $"{difference.Minutes} m {difference.Seconds} s";
     }
 
     public void UpdateQuantityRemainingEnemies(int changes)
