@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 513865006209912332}
   - component: {fileID: 8799838020259030210}
   - component: {fileID: 8454275967163762293}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GroundZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,9 +58,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.03}
-  m_Size: {x: 0.17, y: 0.22}
-  m_Direction: 0
+  m_Offset: {x: 0, y: -0.05}
+  m_Size: {x: 0.15, y: 0.05}
+  m_Direction: 1
 --- !u!1 &5594246642614481580
 GameObject:
   m_ObjectHideFlags: 0
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 5594246642614481581}
   - component: {fileID: 6714870529773086778}
   - component: {fileID: 7376196721108966266}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,10 +242,10 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: -0.088, y: 0.11513146}
-      - {x: -0.088, y: -0.105}
-      - {x: -0.08, y: -0.13}
-      - {x: 0.08, y: -0.13}
-      - {x: 0.088, y: -0.105}
+      - {x: -0.088, y: -0.14}
+      - {x: -0.07, y: -0.165}
+      - {x: 0.07, y: -0.165}
+      - {x: 0.088, y: -0.14}
       - {x: 0.088, y: 0.1151315}
   m_UseDelaunayMesh: 0
 --- !u!1 &5607261963262944198
