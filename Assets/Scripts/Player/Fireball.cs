@@ -11,7 +11,7 @@ public class Fireball : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         var potentialEnemy = other.gameObject.GetComponent<Enemy>();
-        var potentialWall = other.gameObject.GetComponent<Enemy>();
+        var potentialWall = other.gameObject.GetComponent<Ground>();
 
         if (!potentialEnemy.IsNullOrDefault())
         {
