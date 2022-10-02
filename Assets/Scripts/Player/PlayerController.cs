@@ -161,7 +161,7 @@ public class PlayerController : BaseMonoBehaviour
         for (var index = 0; index < enemies.Count; index++)
             enemies[index].Death();
 
-        WinnerMenu.Instance.UpdateQuantityRemainingEnemies(-enemiesCount);
+        UIManager.Instance.UpdateQuantityRemainingEnemies(-enemiesCount);
     }
 
     private void ShotHandler()

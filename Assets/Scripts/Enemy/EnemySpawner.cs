@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
@@ -30,6 +29,6 @@ public class EnemySpawner : MonoBehaviour
             _enemyPrefabs.Remove(enemyPrefab);
         }
         
-        WinnerMenu.Instance.UpdateQuantityRemainingEnemies(enemyQuantity);
+        UIManager.Instance.UpdateQuantityRemainingEnemies(enemyQuantity);
     }
 }

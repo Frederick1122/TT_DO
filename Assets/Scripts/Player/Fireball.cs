@@ -16,7 +16,7 @@ public class Fireball : MonoBehaviour
         if (!potentialEnemy.IsNullOrDefault())
         {
             potentialEnemy.Death();
-            WinnerMenu.Instance.UpdateQuantityRemainingEnemies(-1);
+            UIManager.Instance.UpdateQuantityRemainingEnemies(-1);
         }
         
         if(!potentialEnemy.IsNullOrDefault() || !potentialWall.IsNullOrDefault())
