@@ -28,11 +28,7 @@ public class PlayerInputSystem : MonoBehaviour
 
     public IInputSystem GetPIS() => _currentInputSystem;
 
-    private void Update()
-    {
-        if(_currentInputSystem.IsLaunchEscMenu())
-            LaunchEscMenuAction?.Invoke();
-    }
+
 
     private void UpdateCurrentInputSystem()
     {

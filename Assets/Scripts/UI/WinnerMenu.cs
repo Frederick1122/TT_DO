@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class WinnerMenu : Menu
 {
     [SerializeField] private TMP_Text _endedTimer;
-    [SerializeField] private Button _restartGameButton;
 
     private DateTime _startTime;
     private bool _isPanelActive;
@@ -15,9 +14,6 @@ public class WinnerMenu : Menu
     protected override void Start()
     {
         _startTime = DateTime.Now;
-        
-        _restartGameButton.onClick.RemoveAllListeners();
-        _restartGameButton.onClick.AddListener(RestartGame);
         
         base.Start();
     }
@@ -29,6 +25,4 @@ public class WinnerMenu : Menu
         
         ChangeActiveMenu();
     }
-
-    private void RestartGame() => SceneManager.LoadScene(0);
 }

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public interface IInputSystem
 {
     public float MovingHorizontal();
@@ -11,4 +9,6 @@ public interface IInputSystem
     public bool IsPressShot();
 
     public bool IsLaunchEscMenu();
+
+    public bool IsPressRestart();
 }
