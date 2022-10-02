@@ -13,4 +13,4 @@ Prototype of a unity platformer, a test task. It is necessary to destroy all ene
 
 ## Controls
 
-A/D - movement; space - jump; Q/E - strikes; R - restart
+A/D - movement; space - jump; Q/E - strikes; R - restart; C - close game
