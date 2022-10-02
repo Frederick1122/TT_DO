@@ -26,16 +26,11 @@ public class UIManager : MonoBehaviour
 
     private void Start() => PlayerInputSystem.Instance.LaunchEscMenuAction += OpenEscMenu;
 
-    public void UpdateQuantityRemainingEnemies(int changes)
+    public void OpenWinnerMenu()
     {
-        _remainingEnemies += changes;
-
-        if (_remainingEnemies != 0)
-            return;
-        
-        if(_escMenu.GetMenuStatus())
+        if(_escMenu.GetMenuStatus()) 
             _escMenu.ChangeActiveMenu();
-            
+        
         _winnerMenu.OpenWinnerMenu();
     }
 

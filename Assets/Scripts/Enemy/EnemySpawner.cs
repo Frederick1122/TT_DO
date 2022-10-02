@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    [SerializeField] private EnemiesContainer _enemiesContainer;
     [SerializeField] private List<Enemy> _enemyPrefabs = new List<Enemy>();
     
     [Range(0,100)]
@@ -22,13 +23,15 @@ public class EnemySpawner : MonoBehaviour
             var spawnPoint = _spawnPoints.GetRandom();
             var enemyPrefab = _enemyPrefabs.GetRandom();
 
-            var newEnemy = Instantiate(enemyPrefab, spawnPoint.transform.position, quaternion.identity);
-            newEnemy.transform.parent = gameObject.transform;
+            var newEnemy = Instantiate(enemyPrefab, spawnPoint.transform.position,
+                quaternion.identity, _enemiesContainer.gameObject.transform);
+            
+            newEnemy.OnEnemyDestroyedAction = _enemiesContainer.OnEnemyDestroyedAction;
             
             _spawnPoints.Remove(spawnPoint);
             _enemyPrefabs.Remove(enemyPrefab);
         }
         
-        UIManager.Instance.UpdateQuantityRemainingEnemies(enemyQuantity);
+        _enemiesContainer.UpdateQuantityRemainingEnemies(enemyQuantity);
     }
 }

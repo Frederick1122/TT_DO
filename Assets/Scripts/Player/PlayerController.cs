@@ -24,10 +24,10 @@ public class PlayerController : BaseMonoBehaviour
     [SerializeField] private AttackZone _attackZone;
 
     private PlayerInputSystem _playerInputSystem;
-    public bool _controlEnabled = true;
+    private bool _controlEnabled = true;
     private Vector2 _movement;
-
     private bool _isGrounded;
+    
     private static readonly int Attacking1 = Animator.StringToHash("Attacking1");
     private static readonly int Attacking2 = Animator.StringToHash("Attacking2");
     private static readonly int Jumping = Animator.StringToHash("Jumping");
@@ -156,12 +156,9 @@ public class PlayerController : BaseMonoBehaviour
     private void PunchHandler()
     {
         var enemies = _attackZone.GetEnemies();
-        var enemiesCount = enemies.Count;
 
         for (var index = 0; index < enemies.Count; index++)
             enemies[index].Death();
-
-        UIManager.Instance.UpdateQuantityRemainingEnemies(-enemiesCount);
     }
 
     private void ShotHandler()

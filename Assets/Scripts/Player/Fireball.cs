@@ -13,12 +13,9 @@ public class Fireball : MonoBehaviour
         var potentialEnemy = other.gameObject.GetComponent<Enemy>();
         var potentialWall = other.gameObject.GetComponent<Ground>();
 
-        if (!potentialEnemy.IsNullOrDefault())
-        {
+        if (!potentialEnemy.IsNullOrDefault()) 
             potentialEnemy.Death();
-            UIManager.Instance.UpdateQuantityRemainingEnemies(-1);
-        }
-        
+
         if(!potentialEnemy.IsNullOrDefault() || !potentialWall.IsNullOrDefault())
             Death();
     }
