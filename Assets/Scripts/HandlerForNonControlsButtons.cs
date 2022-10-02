@@ -12,5 +12,8 @@ public class HandlerForNonControlsButtons : MonoBehaviour
 
         if (PIS.IsPressRestart()) 
             SceneManager.LoadScene(0);
+        
+        if(PIS.IsCloseGame())
+            Application.Quit();
     }
 }

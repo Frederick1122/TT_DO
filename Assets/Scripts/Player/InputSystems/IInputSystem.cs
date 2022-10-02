@@ -11,4 +11,6 @@ public interface IInputSystem
     public bool IsLaunchEscMenu();
 
     public bool IsPressRestart();
+
+    public bool IsCloseGame();
 }

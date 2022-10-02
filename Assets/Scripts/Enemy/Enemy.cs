@@ -32,6 +32,7 @@ public class Enemy : BaseMonoBehaviour
         _boxCollider2D.enabled = false;
         _spriteRenderer.enabled = false;
         _rigidbody2D.isKinematic = true;
+        
         OnEnemyDestroyedAction?.Invoke();
     }
 }

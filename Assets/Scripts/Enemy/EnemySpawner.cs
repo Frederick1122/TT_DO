@@ -26,7 +26,7 @@ public class EnemySpawner : MonoBehaviour
             var newEnemy = Instantiate(enemyPrefab, spawnPoint.transform.position,
                 quaternion.identity, _enemiesContainer.gameObject.transform);
             
-            newEnemy.OnEnemyDestroyedAction = _enemiesContainer.OnEnemyDestroyedAction;
+            newEnemy.OnEnemyDestroyedAction += () => _enemiesContainer.UpdateQuantityRemainingEnemies(-1);
             
             _spawnPoints.Remove(spawnPoint);
             _enemyPrefabs.Remove(enemyPrefab);
